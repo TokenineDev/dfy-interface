@@ -100,17 +100,14 @@ function SwapRate(): JSX.Element {
                 <title>Swap Rate | DFY</title>
             </Helmet>
             <BackgroundMain className="w-screen">
-                <div className="relative flex flex-col items-center">
-                    {/* <img alt="" src={BentoBoxLogo} className="object-scale-down w-40 md:w-60 h-auto" /> */}
-
-                    <div className="container mx-auto max-w-3xl">
-                        <div className="font-bold text-center text-4xl my-20">
-                            {i18n._(t`Swap Rate`)}
+                <div className="navbar-bg-green-thick-to-thin shadow-swap-blue-glow w-full max-w-5xl rounded mx-auto mt-10 border border-white">
+                    <div className="relative flex flex-col items-center">
+                        <div className="container mx-auto max-w-3xl">
+                            <div className="font-bold text-center text-4xl my-10 text-white">
+                                {i18n._(t`Swap Rate`)}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div className="navbar-bg-green-thick-to-thin shadow-swap-blue-glow w-full max-w-2xl rounded mx-auto">
                     <div className="p-4">
                         <div>
                             <div>

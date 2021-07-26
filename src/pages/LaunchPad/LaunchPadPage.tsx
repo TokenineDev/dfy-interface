@@ -25,12 +25,14 @@ import { Token } from 'dfy-sdk'
 import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { launchTokenListByChainId, LaunchTokenList } from './config/launch-token-list'
 import Loader from 'components/Loader'
+import SwapRate from 'pages/SwapRate'
  
 const BackgroundMain = styled.div`
     margin-top: -40px;
     margin-bottom: -80px;
-    padding-bottom: 80px;
     height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
     overflow-y: scroll;
 `
 
@@ -168,7 +170,7 @@ function LaunchPadPage({
                     </div>
                 </div>
 
-                <div className="container mx-auto sm:px-6 max-w-5xl  rounded border border-white">
+                <div className="container mx-auto sm:px-6 max-w-5xl rounded border border-white">
                     <div className="grid gap-4 sm:gap-12 grid-flow-auto grid-cols-2">
                         <Card className="flex items-center justify-center col-span-2 md:col-span-1 text-white">
                             {launchDetail && launchDetail.imageTokenUrl && <div className="text-center mb-10">
@@ -390,6 +392,11 @@ function LaunchPadPage({
                         </div>
                     </div>
                 </div>}
+
+                <div className="mt-10">
+                    <SwapRate />
+                </div>
+
             </BackgroundMain>
         </>
     )

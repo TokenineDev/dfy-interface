@@ -53,12 +53,12 @@ const ItemRateShow = ({
   }, [library, inputCurrencyId, outputCurrencyId, chainId, inputValue, factoryAddress, tokenInput, tokenOutput])
 
   return <>
-    {price !== '0' && inputValue !== '' && <div className="p-4 rounded border border-dark-800 mt-4">
+    {inputValue !== '' && <div className="p-4 rounded border border-dark-800 mt-4">
       <div className="text-white text-xl">
         {imageLogoUrl && <img alt="launchpad" src={imageLogoUrl} className="inline-block h-10 w-10 rounded-full mr-3" />}
         <span>{name}</span>
       </div>
-      <div className="text-white text-2xl py-4 font-bold">{price}</div>
+      {price !== '0' && <div className="text-white text-2xl py-4 font-bold">{price}</div>}
       {trade && <TradeSummary trade={trade} allowedSlippage={0}/>}
       <a rel="noreferrer" href={`${url}?outputCurrency=${outputCurrencyId}&inputCurrency=${inputCurrencyId}`} target="_blank">
         <Button
