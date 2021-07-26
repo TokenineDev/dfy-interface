@@ -386,7 +386,7 @@ function LaunchPadPage({
                                     }
                                     className="w-full border border-black py-2 font-bold text-center text-black disabled:cursor-not-allowed"
                                 >
-                                    {i18n._(t`Claim ${forBuyingTokenName}`)}
+                                    {i18n._(t`Claim`)} {forBuyingTokenName}
                                 </Button>
                             </Card>
                         </div>
