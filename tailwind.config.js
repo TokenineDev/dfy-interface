@@ -64,7 +64,7 @@ module.exports = {
             'dark-950': '#2d7a26', // new
             'dark-900': '#2b580c', // new
             'dark-850': '#1d1e2c',
-            'dark-800': '#467642', // new
+            'dark-800': '#105646', // new
             'dark-700': '#6fa66a',
             'dark-600': '#1C2D49',
             'dark-500': '#223D5E',
