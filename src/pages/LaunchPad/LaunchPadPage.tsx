@@ -69,8 +69,8 @@ function LaunchPadPage({
     const [launchPadIncomeBalance, setLaunchPadIncomeBalance] = useState('')
 
     const [launchpadTokenAddress, setLauchpadToken] = useState('')
-    const [luachPadTokenName, luachPadTokenSymbol, luachPadDecimals] = useLaunchToken(launchpadTokenAddress, account)
-    const launchCurrencyAmount = useCurrencyBalance(account ?? undefined, launchpadTokenAddress !== '' ? new Token(chainId ?? 0, launchpadTokenAddress, luachPadDecimals, luachPadTokenSymbol, luachPadTokenName) : undefined)
+    const [launchPadTokenName, launchPadTokenSymbol, launchPadDecimals] = useLaunchToken(launchpadTokenAddress, account)
+    const launchCurrencyAmount = useCurrencyBalance(account ?? undefined, launchpadTokenAddress !== '' ? new Token(chainId ?? 0, launchpadTokenAddress, launchPadDecimals, launchPadTokenSymbol, launchPadTokenName) : undefined)
 
     const [approvalState, approve] = useApproveCallback(forBuyingCurrencyAmount, launchPadContract?.address)
     const addTransaction = useTransactionAdder()
@@ -181,11 +181,11 @@ function LaunchPadPage({
                         </Card>
                         <Card className="col-span-2 md:col-span-1 w-full shadow-pink-glow hover:shadow-pink-glow-hovered">
                             <div className="relative w-full">
-                                {luachPadTokenName && luachPadTokenSymbol && launchpadTokenAddress ? <div>
+                                {launchPadTokenName && launchPadTokenSymbol && launchpadTokenAddress ? <div>
                                     <div className="flex mb-10 ">
                                         <div className="pr-5 text-black text-center border-r border-black">
-                                            <p className="text-h1 font-bold">{luachPadTokenSymbol}</p>
-                                            <p>{luachPadTokenName}</p>
+                                            <p className="text-h1 font-bold">{launchPadTokenSymbol}</p>
+                                            <p>{launchPadTokenName}</p>
                                         </div>
                                         <div className="text-black ml-5">
                                             <p>Address:</p>
@@ -204,7 +204,7 @@ function LaunchPadPage({
                                     <Card className="border border-black mb-10">
                                         <p className="text-black mb-3">Remain:</p> 
                                         <p className="text-center text-black text-h2">
-                                        { launchPadRemain } {luachPadTokenSymbol}
+                                        { launchPadRemain } {launchPadTokenSymbol}
                                         </p>
                                     </Card> 
                                 </div> : <div className="w-2 mx-auto mb-10">
@@ -238,7 +238,7 @@ function LaunchPadPage({
                                             <AiOutlineArrowDown className="mx-auto" size="24" />
                                         </div>
                                         <div className="text-black text-right text-caption2 mt-4">
-                                            Balance: {launchCurrencyAmount ? launchCurrencyAmount.toSignificant(6) : 0} {luachPadTokenSymbol}
+                                            Balance: {launchCurrencyAmount ? launchCurrencyAmount.toSignificant(6) : 0} {launchPadTokenSymbol}
                                         </div>
                                         <div className="flex items-center rounded bg-white border border-black space-x-3 p-3 w-full mb-10">
                                             <NumericalInput
@@ -252,7 +252,7 @@ function LaunchPadPage({
                                                     setTokenBalanec(launchToken)
                                                 }}
                                             />
-                                            <span className="ml-2">{luachPadTokenSymbol}</span>
+                                            <span className="ml-2">{launchPadTokenSymbol}</span>
                                         </div>
                                         { ApprovalState.UNKNOWN === approvalState && <div className="w-2 mx-auto">
                                             <Loader stroke="black" />
@@ -309,10 +309,10 @@ function LaunchPadPage({
                                 <Card className="border border-black mb-10 w-full">
                                     <p className="text-black mb-3">
                                         <FaCoins className="inline-block mr-2" />
-                                        Remain ({luachPadTokenName}):
+                                        Remain ({launchPadTokenName}):
                                     </p> 
                                     <p className="text-center text-black text-h2">
-                                    { launchPadRemain } {luachPadTokenSymbol}
+                                    { launchPadRemain } {launchPadTokenSymbol}
                                     </p>
                                     <div className="text-right mt-3">
                                         <Button
@@ -330,11 +330,11 @@ function LaunchPadPage({
                                         </Button>
                                     </div>
                                 </Card>
-                                <p className="text-black">Deposite {luachPadTokenName} ({luachPadTokenSymbol})</p>
+                                <p className="text-black">Deposite {launchPadTokenName} ({launchPadTokenSymbol})</p>
                                 <div className="text-black text-right text-caption2 mt-4">
-                                    Balance: {launchCurrencyAmount ? launchCurrencyAmount.toSignificant(6) : 0} {luachPadTokenSymbol}
+                                    Balance: {launchCurrencyAmount ? launchCurrencyAmount.toSignificant(6) : 0} {launchPadTokenSymbol}
                                 </div>
-                                <div className="flex items-center rounded bg-black space-x-3 p-3 w-full mb-10">
+                                <div className="flex items-center rounded bg-white border border-black space-x-3 p-3 w-full mb-10">
                                     <Button
                                         onClick={onMaxMerchant}
                                         size="small"
@@ -349,7 +349,7 @@ function LaunchPadPage({
                                             setTokenMerchantBalance(val)
                                         }}
                                     />
-                                    <span className="ml-2">{luachPadTokenSymbol}</span>
+                                    <span className="ml-2">{launchPadTokenSymbol}</span>
                                 </div>
                                 <Button
                                     disabled={tokenMerchantBalance === ''}
