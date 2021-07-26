@@ -52,70 +52,12 @@ function AppBar(): JSX.Element {
                                     </div>
                                     <div className="hidden sm:block sm:ml-4">
                                         <div className="flex space-x-2">
-                                            <NavLink id={`swap-nav-link`} to={'/swap'}>
-                                                {i18n._(t`Swap`)}
+                                            <NavLink id={`bento-nav-link`} to={'/launchpad'}>
+                                                {i18n._(t`Launchpad`)}
                                             </NavLink>
                                             <NavLink id={`swap-nav-link`} to={'/swap-rate'}>
                                                 {i18n._(t`Swap Rate`)}
                                             </NavLink>
-                                            <NavLink
-                                                id={`pool-nav-link`}
-                                                to={'/pool'}
-                                                isActive={(match, { pathname }) =>
-                                                    Boolean(match) ||
-                                                    pathname.startsWith('/add') ||
-                                                    pathname.startsWith('/remove') ||
-                                                    pathname.startsWith('/create') ||
-                                                    pathname.startsWith('/find')
-                                                }
-                                            >
-                                                {i18n._(t`Pool`)}
-                                            </NavLink>
-                                            {chainId && [ChainId.BSC, ChainId.MATIC, ChainId.BKC, ChainId.BSC_TESTNET].includes(chainId) && (
-                                                <NavLink id={`yield-nav-link`} to={'/yield'}>
-                                                    {i18n._(t`Yield`)}
-                                                </NavLink>
-                                            )}
-                                            <NavLink id={`nft-nav-link`} to={'/nft'}>
-                                                {i18n._(t`NFT`)}
-                                            </NavLink>
-                                            {/* {chainId === ChainId.MAINNET && (
-                                                <NavLink id={`sushibar-nav-link`} to={'/sushibar'}>
-                                                    {i18n._(t`SushiBar`)}
-                                                </NavLink>
-                                            )} */}
-                                            {/* {chainId &&
-                                                [ChainId.BKC, ChainId.KOVAN, ChainId.BSC, ChainId.MATIC].includes(
-                                                    chainId
-                                                ) && (
-                                                    <NavLink id={`kashi-nav-link`} to={'/bento/kashi/lend'}>
-                                                        {i18n._(t`Lend`)}
-                                                    </NavLink>
-                                                )} */}
-                                            <NavLink id={`bento-nav-link`} to={'/launchpad'}>
-                                                {i18n._(t`Launchpad`)} {/* bentobox */}
-                                            </NavLink>
-                                            {/* {chainId === ChainId.MAINNET && (
-                                                <NavLink id={`vesting-nav-link`} to={'/vesting'}>
-                                                    {i18n._(t`Vesting`)}
-                                                </NavLink>
-                                            )} */}
-                                            {chainId &&
-                                                [
-                                                    ChainId.BKC,
-                                                    ChainId.BSC,
-                                                    ChainId.XDAI,
-                                                    ChainId.FANTOM,
-                                                    ChainId.MATIC,
-                                                    ChainId.MAINNET
-                                                ].includes(chainId) && (
-                                                    <ExternalLink
-                                                        id={`analytics-nav-link`}
-                                                        href={ANALYTICS_URL[chainId] || 'https://analytics.sushi.com'}
-                                                    >
-                                                        {i18n._(t`Analytics`)}
-                                                    </ExternalLink>
-                                                )}
                                         </div>
                                     </div>
                                 </div>
@@ -257,20 +199,6 @@ function AppBar(): JSX.Element {
                                                     </QuestionHelper>
                                                 </>
                                             )}
-                                        {chainId && chainId === ChainId.MATIC && (
-                                            <div className="hidden sm:inline-block">
-                                                <a
-                                                    className="flex items-center rounded bg-light-green hover:bg-super-light-green p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto"
-                                                    href="https://wallet.matic.network/bridge/"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <div className="grid grid-flow-col auto-cols-max items-center rounded-lg text-sm text-secondary py-2 px-3 pointer-events-auto">
-                                                        <div className="text-white">{i18n._(t`Bridge Assets`)}</div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        )}
                                         {library && library.provider.isMetaMask && (
                                             <div className="hidden sm:inline-block">
                                                 <Web3Network />
@@ -289,17 +217,6 @@ function AppBar(): JSX.Element {
                                             <Web3Status />
                                         </div>
                                         <LanguageSwitch />
-
-                                        {
-                                            chainId && [
-                                                ChainId.GÖRLI,
-                                                ChainId.KOVAN,
-                                                ChainId.RINKEBY,
-                                                ChainId.ROPSTEN
-                                            ].includes(chainId) && (
-                                                <Web3Faucet />
-                                            )
-                                        }
                                         
                                         <MoreMenu />
                                     </div>
@@ -320,74 +237,12 @@ function AppBar(): JSX.Element {
 
                         <Disclosure.Panel className="sm:hidden">
                             <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                                {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                                {/* <a
-                                href="#"
-                                className="bg-gray-1000 text-white block px-3 py-2 rounded-md text-base font-medium"
-                            >
-                                Dashboard
-                            </a> */}
-
-                                <NavLink id={`swap-nav-link`} to={'/swap'}>
-                                    {i18n._(t`Swap`)}
+                                <NavLink id={`bento-nav-link`} to={'/launchpad'}>
+                                    {i18n._(t`Launchpad`)}
                                 </NavLink>
                                 <NavLink id={`swap-nav-link`} to={'/swap-rate'}>
                                     {i18n._(t`Swap Rate`)}
                                 </NavLink>
-                                <NavLink
-                                    id={`pool-nav-link`}
-                                    to={'/pool'}
-                                    isActive={(match, { pathname }) =>
-                                        Boolean(match) ||
-                                        pathname.startsWith('/add') ||
-                                        pathname.startsWith('/remove') ||
-                                        pathname.startsWith('/create') ||
-                                        pathname.startsWith('/find')
-                                    }
-                                >
-                                    {i18n._(t`Pool`)}
-                                </NavLink>
-
-                                {chainId && [ChainId.BSC, ChainId.MATIC, ChainId.BKC, ChainId.BSC_TESTNET].includes(chainId) && (
-                                    <NavLink id={`yield-nav-link`} to={'/yield'}>
-                                        {i18n._(t`Yield`)}
-                                    </NavLink>
-                                )}
-                                {chainId &&
-                                    [ChainId.MAINNET, ChainId.KOVAN, ChainId.BSC, ChainId.MATIC].includes(chainId) && (
-                                        <NavLink id={`kashi-nav-link`} to={'/bento/kashi/lend'}>
-                                            {i18n._(t`Kashi Lending`)}
-                                        </NavLink>
-                                    )}
-                                <NavLink id={`bento-nav-link`} to={'/launchpad'}>
-                                    {i18n._(t`Launchpad`)}
-                                </NavLink>
-                                {/* {chainId === ChainId.MAINNET && (
-                                    <NavLink id={`stake-nav-link`} to={'/sushibar'}>
-                                        {i18n._(t`SushiBar`)}
-                                    </NavLink>
-                                )}
-                                {chainId === ChainId.MAINNET && (
-                                    <NavLink id={`vesting-nav-link`} to={'/vesting'}>
-                                        {i18n._(t`Vesting`)}
-                                    </NavLink>
-                                )} */}
-                                {chainId &&
-                                    [
-                                        ChainId.MAINNET,
-                                        ChainId.BKC,
-                                        ChainId.BSC,
-                                        ChainId.XDAI,
-                                        ChainId.FANTOM,
-                                        ChainId.MATIC
-                                    ].includes(chainId) && (
-                                        <ExternalLink
-                                            id={`analytics-nav-link`}
-                                            href={ANALYTICS_URL[chainId] || 'https://analytics.sushi.com'}
-                                        >
-                                            {i18n._(t`Analytics`)}
-                                        </ExternalLink>
-                                    )}
                             </div>
                         </Disclosure.Panel>
                     </>
