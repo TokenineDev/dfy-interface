@@ -31,7 +31,7 @@ function SwapRate(): JSX.Element {
 
     const factoryAddresses = useConfig(chainId)
 
-    const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
+    const { onCurrencySelection, onUserInput } = useSwapActionHandlers()
 
     const startCurrency = useCurrency('ETH')
 
@@ -62,6 +62,7 @@ function SwapRate(): JSX.Element {
 
     const handleInputSelect = useCallback(
         inputCurrency => {
+            if (inputCurrency === currencyOutput) return
             onCurrencySelection(Field.INPUT, inputCurrency)
             setCurrencyInput(inputCurrency)
         },
@@ -70,6 +71,7 @@ function SwapRate(): JSX.Element {
 
     const handleOutputSelect = useCallback(
         outputCurrency => {
+            if (outputCurrency === currencyInput) return
             onCurrencySelection(Field.OUTPUT, outputCurrency)
             setCurrencyOutput(outputCurrency)
         }, 
@@ -86,6 +88,12 @@ function SwapRate(): JSX.Element {
         maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
         maxAmountInput && setInputValue(maxAmountInput.toExact())
     }, [maxAmountInput, onUserInput])
+
+    const onSwitchTokens = () => {
+        const temp = currencyOutput
+        setCurrencyOutput(currencyInput) 
+        setCurrencyInput(temp)
+    }
 
     useEffect(() => {
         if (startCurrency) {

@@ -215,7 +215,7 @@ function LaunchPadPage({
                                         <div className="text-black text-right text-caption2">
                                             Balance: {forBuyingCurrencyAmount ? forBuyingCurrencyAmount?.toSignificant(6) : 0} {forBuyingTokenSymbol}
                                         </div>
-                                        <div className="flex items-center rounded bg-black space-x-3 p-3 w-full">
+                                        <div className="flex items-center rounded bg-white border border-black space-x-3 p-3 w-full">
                                             <Button
                                                 onClick={onMax}
                                                 size="small"
@@ -240,7 +240,7 @@ function LaunchPadPage({
                                         <div className="text-black text-right text-caption2 mt-4">
                                             Balance: {launchCurrencyAmount ? launchCurrencyAmount.toSignificant(6) : 0} {luachPadTokenSymbol}
                                         </div>
-                                        <div className="flex items-center rounded bg-black space-x-3 p-3 w-full mb-10">
+                                        <div className="flex items-center rounded bg-white border border-black space-x-3 p-3 w-full mb-10">
                                             <NumericalInput
                                                 disabled={isCommiting}
                                                 className="token-amount-input text-right"
