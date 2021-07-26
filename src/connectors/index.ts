@@ -60,6 +60,7 @@ export const injected = new InjectedConnector({
         80001, // matic testnet
         100, // xdai
         96, // bkc
+        35, // xchain
         56, // binance smart chain
         97, // binance smart chain testnet
         1287, // moonbase

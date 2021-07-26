@@ -18,7 +18,7 @@ const BackgroundMain = styled.div`
 `
 const ImageBackground = styled.div`
   position: relative;
-  background-image: url('/images/home_bg.png');
+  background-image: url('/images/dfy-bg.png');
   /* background-position: center; */
   background-size: cover;
 `
@@ -71,7 +71,7 @@ function Home(): JSX.Element {
     <BackgroundMain className="navbar-bg-green-thick-to-thin w-screen">
       <div className="px-20 pt-5">
         <ImageBackground className="py-20 mb-10 rounded-md border border-green-thick">
-          <div className="uppercase text-center font-bold text-5xl text-white">Utility Token SWAP</div>
+          <div className="uppercase text-center font-bold text-5xl text-white">DeFi Platform</div>
           <div className="text-center mt-20">
             <Link
               className="bg-green-thick uppercase text-white font-bold py-3 px-20 mr-5 rounded shadow  hover:shadow-xl transition-shadow"
