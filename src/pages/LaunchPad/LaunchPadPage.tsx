@@ -275,7 +275,7 @@ function LaunchPadPage({
                                                         setIsCommiting(true)
                                                         const response = await launchPadContract?.functions.swap(startTokenBalance.toBigNumber(decimals))
                                                         addTransaction(response, {
-                                                            summary: 'Launch commited!'
+                                                            summary: `Buying was committed!`
                                                         })
                                                         setStartTokenBalance('')
                                                         setTokenBalanec(BigNumber.from(0))
@@ -287,7 +287,7 @@ function LaunchPadPage({
                                                 }}
                                                 className="w-full border border-black py-2 font-bold text-center text-black disabled:cursor-not-allowed"
                                             >
-                                                {i18n._(t`COMMIT`)}
+                                                {i18n._(t`BUY`)}
                                             </Button>
                                         ) }
                                     </div>
