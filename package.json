@@ -178,10 +178,12 @@
     "dependencies": {
         "@lufycz/sushi-data": "^2.0.0-canary-21",
         "@types/big.js": "^6.1.1",
+        "axios": "^0.21.1",
         "big.js": "^6.1.1",
         "dfy-sdk": "^1.0.2",
         "react-icons": "^4.2.0",
         "react-multi-carousel": "^2.6.3",
-        "timeago-react": "^3.0.3"
+        "timeago-react": "^3.0.3",
+        "ts-md5": "^1.2.9"
     }
 }

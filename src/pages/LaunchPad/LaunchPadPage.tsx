@@ -26,7 +26,23 @@ import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { launchTokenListByChainId, LaunchTokenList } from './config/launch-token-list'
 import Loader from 'components/Loader'
 import SwapRate from 'pages/SwapRate'
- 
+import { Md5 } from 'ts-md5'
+
+interface PaymentData {
+    MerchantCode: string
+    OrderNo: string
+    CustomerId: string
+    Amount: string
+    PhoneNumber: string
+    Description: string
+    ChannelCode: string
+    Currency: string
+    LangCode: string
+    RouteNo: string
+    IPAddress: string
+    APIKey: string
+}
+
 const BackgroundMain = styled.div`
     margin-top: -40px;
     margin-bottom: -80px;
@@ -35,6 +51,59 @@ const BackgroundMain = styled.div`
     overflow-x: hidden;
     overflow-y: scroll;
 `
+
+const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
+    color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+    width: 0;
+    position: relative;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    flex: 1 1 auto;
+    background-color: transparent;
+    font-size: ${({ fontSize }) => fontSize ?? '24px'};
+    text-align: ${({ align }) => align && align};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px;
+    -webkit-appearance: textfield;
+
+    ::-webkit-search-decoration {
+        -webkit-appearance: none;
+    }
+
+    [type='number'] {
+        -moz-appearance: textfield;
+    }
+
+    ::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    ::placeholder {
+        color: ${({ theme }) => theme.text4};
+    }
+`
+
+const PAYMENT_CONFIG = {
+    MerchantCode: 'M031733',
+    ChannelCode: 'bank_qrcode',
+    Currency: '764', // USD 840, THB 764
+    LangCode: 'TH',
+    RouteNo: '1',
+    IPAddress: '49.228.178.51',
+    APIKey: 'kOHHykMzQl0cwMuSOh8T9BHOvanRU0mxnja4ndbN6Kst08k6qhsfUKvdp2C5tvOr'
+}
+
+const sum = (data: PaymentData) => {
+    const md5Key = 'joCKt5gbskde6e7zN6uFpbRmEgwkIydJm0qYhCihb6uDktC5nmwXMesAUmlfu8qO4Nmmd6KAFHbfaZ9Bi9unpw2wr8k2pjuMgjLYAresMjgGhrekszQvsQtLb69T4CFgjCBIOcfsSYr11QSg2hPHEK8FtV5DiJqBuS0NO'
+    const content = data.MerchantCode + data.OrderNo + data.CustomerId
+    + data.Amount + data.PhoneNumber + data.Description + data.ChannelCode + data.Currency
+    + data.LangCode + data.RouteNo + data.IPAddress + data.APIKey + md5Key
+    return Md5.hashStr(content)
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function LaunchPadPage({
@@ -152,6 +221,44 @@ function LaunchPadPage({
         fetchLaunchTokenRemain()
     }, [account, decimals, launchCurrencyAmount, launchPadContract])
 
+    const [orderNo, setOrderNo] = useState('') 
+    const [customerId, setCustomerId] = useState('')
+    const [checkSum, setCheckSum] = useState('')
+    const [description, setDescription] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [fiatBalance, setFiatBalance] = useState('')
+    const [fiatBalanceReal, setFiatBalanceReal] = useState('')
+
+    const calculateFiatTHB = (val: string) => {
+        try {
+            // usd to thb rate 1 USD : 32 THB
+            const result = Number(val) * 32.0
+            if (isNaN(result)) {
+                setFiatBalance('')
+                return
+            }
+            setFiatBalanceReal((result * 100).toString().replace('.', ''))
+            setFiatBalance(result.toString())
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    useEffect(() => {
+        setOrderNo(account ? account.substring(2, 10).toUpperCase() : '')
+        setCustomerId(account ?? '')
+        setDescription(launchpadTokenAddress)
+        setCheckSum(sum({
+            ...PAYMENT_CONFIG,
+            PhoneNumber: phoneNumber,
+            Description: `${launchpadTokenAddress}`,
+            Amount: fiatBalanceReal,
+            OrderNo: orderNo,
+            CustomerId: customerId
+        }))
+        console.log(fiatBalanceReal)
+    }, [launchpadTokenAddress, account, orderNo, customerId, fiatBalance, phoneNumber, fiatBalanceReal])
+
     return (
         <>
             {' '}
@@ -161,8 +268,6 @@ function LaunchPadPage({
             <BackgroundMain className="w-screen">
 
                 <div className="relative flex flex-col items-center">
-                    {/* <img alt="" src={BentoBoxLogo} className="object-scale-down w-40 md:w-60 h-auto" /> */}
-
                     <div className="container mx-auto max-w-3xl">
                         <div className="font-bold text-center text-4xl text-black my-20">
                             {i18n._(t`Launchpad`)}
@@ -229,6 +334,7 @@ function LaunchPadPage({
                                                 value={startTokenBalance}
                                                 onUserInput={val => {
                                                     startTokenToDestinationTokenCalculate(val)
+                                                    calculateFiatTHB(val)
                                                 }}
                                             />
                                             <span className="ml-2">{forBuyingTokenSymbol}</span>
@@ -249,6 +355,7 @@ function LaunchPadPage({
                                                     const launchToken = val.toBigNumber(decimals)
                                                     const converted = launchToken.div(tokenRate)
                                                     setStartTokenBalance(converted.toFixed(decimals))
+                                                    calculateFiatTHB(converted.toFixed(decimals))
                                                     setTokenBalanec(launchToken)
                                                 }}
                                             />
@@ -296,6 +403,69 @@ function LaunchPadPage({
                                 )}
                             </div>
                         </Card>
+                    </div>
+                </div>
+
+                <div className="container mx-auto p-6 max-w-5xl mt-10 rounded border border-black">
+                    <div className="font-bold text-center text-4xl text-black my-10">
+                        {i18n._(t`PAY BY FIAT`)}
+                    </div>
+                    <div className="grid gap-4 sm:gap-12 grid-flow-auto grid-cols-2">
+                        <div>
+                            <div className="mb-2 text-xl">Order ID: <span className="font-bold">{orderNo}</span></div>
+                            <div className="text-xl">Your wallet address: <span className="font-bold">
+                                {customerId.substring(0, 8)}...{customerId.substring(customerId.length-6, customerId.length)}
+                            </span></div>
+                        </div>
+                        <div>
+                            <div className="flex items-center rounded bg-white border border-black space-x-3 p-3 w-full mb-10">
+                                <span className="ml-2">Tel</span>
+                                <StyledInput
+                                    className="token-amount-input text-right"
+                                    placeholder="0812345678"
+                                    maxLength={10}
+                                    value={phoneNumber}
+                                    onChange={(e) => {
+                                        setPhoneNumber(e.target.value)
+                                    }}
+                                />
+                                
+                            </div>
+                            <div className="flex items-center rounded bg-white border border-black space-x-3 p-3 w-full mb-10">
+                                <NumericalInput
+                                    className="token-amount-input text-right"
+                                    disabled
+                                    value={fiatBalance}
+                                    onUserInput={val => {
+                                        // console.log(val)
+                                    }}
+                                />
+                                <span className="ml-2">THB</span>
+                            </div>
+                            <form id="form1" action="https://sandbox-cdnv3.chillpay.co/Payment/" method="post" target="_blank">
+                                <input type="hidden" name="MerchantCode" value={PAYMENT_CONFIG.MerchantCode}/>
+                                <input type="hidden" name="OrderNo" value={orderNo}/>
+                                <input type="hidden" name="CustomerId" value={customerId}/>
+                                <input type="hidden" name="Amount" value={fiatBalanceReal}/>
+                                <input type="hidden" name="PhoneNumber" value={phoneNumber}/>
+                                <input type="hidden" name="Description" value={description}/>
+                                <input type="hidden" name="ChannelCode" value={PAYMENT_CONFIG.ChannelCode}/>
+                                <input type="hidden" name="Currency" value={PAYMENT_CONFIG.Currency}/>
+                                <input type="hidden" name="LangCode" value={PAYMENT_CONFIG.LangCode}/>
+                                <input type="hidden" name="RouteNo" value={PAYMENT_CONFIG.RouteNo}/>
+                                <input type="hidden" name="IPAddress" value={PAYMENT_CONFIG.IPAddress}/>
+                                <input type="hidden" name="APIKey" value={PAYMENT_CONFIG.APIKey}/>
+                                <input type="hidden" name="CheckSum" value={checkSum}/>
+                                <Button
+                                    type="submit"
+                                    disabled={isCommiting || warningMsg !== '' || startTokenBalance === ''}
+                                    color="gradient3"
+                                    className="w-full border border-black py-2 font-bold text-center text-black disabled:cursor-not-allowed"
+                                >
+                                    {i18n._(t`BUY`)}
+                                </Button>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
