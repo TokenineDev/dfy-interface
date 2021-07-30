@@ -277,7 +277,7 @@ function LaunchPadPage({
 
                 <div className="container mx-auto sm:px-6 max-w-5xl rounded border border-black">
                     <div className="grid gap-4 sm:gap-12 grid-flow-auto grid-cols-2">
-                        <Card className="flex items-center justify-center col-span-2 md:col-span-1 text-black">
+                        <Card className="flex justify-center col-span-2 md:col-span-1 text-black">
                             {launchDetail && launchDetail.imageTokenUrl && <div className="text-center mb-10">
                                 <img alt="launchpad" src={launchDetail.imageTokenUrl} className="inline-block h-20 w-20 rounded-full" />
                             </div>}

@@ -40,6 +40,13 @@ const BSC_LAUNCH_TOKEN_LIST: { [key: string]: LaunchTokenList } = {
     proposalContent: '<p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a ultrices lectus. Sed pharetra tempor cursus. Quisque quis lorem luctus, rutrum justo ut, auctor urna. Pellentesque ut neque sit amet magna dapibus accumsan.</p><p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a ultrices lectus. Sed pharetra tempor cursus. Quisque quis lorem luctus, rutrum justo ut, auctor urna. Pellentesque ut neque sit amet magna dapibus accumsan.</p><p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a ultrices lectus. Sed pharetra tempor cursus. Quisque quis lorem luctus, rutrum justo ut, auctor urna. Pellentesque ut neque sit amet magna dapibus accumsan.</p>',
     available: true
   },
+  '0x1942E51D5f92a9301f55a80adE3AEaEaD4509705': {
+    contractAddress: '0x1942E51D5f92a9301f55a80adE3AEaEaD4509705',
+    title: 'SHOT',
+    imageTokenUrl: 'https://presale.bestshot.win/images/shot-token.png',
+    proposalContent: '<p class="mb-3"><div class="text-xl">Hit me with your Best SHOT!</div><p>BestShot is a Play-to-earn sports prediction game that leverages blockchain and cryptocurrency\'s power and popularity for a secure sports-based system built especially for fans to engage with their favorite teams.</p> <p class="mt-2">Website: <a class="text-blue" href="https://www.bestshot.win/">https://www.bestshot.win/</a></p></p>',
+    available: true
+  }
 }
 
 // use for list token each chain ID
